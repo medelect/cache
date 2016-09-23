@@ -15,38 +15,11 @@ Session = sqlalchemy.orm.sessionmaker(bind=engine)
 session = Session()
 Base.metadata.create_all(engine)
 
-def is_empty():
-    return len(session.query(Language).all()) <= 0
-
-def populate():
-    new_langs = [Language('Python','py'),
-                 Language('Ruby', 'rb'),
-                 Language('Common Lisp', 'lisp'),
-                 Language('Objective-C', 'm')
-                ]
-    session.add_all(new_langs)
-    session.commit()
-
-def index(request):
-    if is_empty():
-        populate()
-    lang = session.query(Language).all()
-    return render_to_response('cache/index.html',{'langsi': lang})
-    #return HttpResponse("Hello, World")
-
-
-
-
-def dtme(request):
-    now = datetime.datetime.now()
-    html = "<html><body>It is now %s. Some changes</body></html>" % now
-    return HttpResponse(html)
-
-
+def index():
+    return HttpResponse("Tmp Index") 
 
 def inc(request):
     tb = session.query(Income.quantas).filter(Income.quantas > 100).all()
-   # tb = session.query(year(Income.date)).all()
     if tb:
         return render_to_response('cache/inc.html',{'tb': tb})
     return HttpResponse("PPZDC") 
