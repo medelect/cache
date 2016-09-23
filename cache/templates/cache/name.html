@@ -1,0 +1,8 @@
+<form action="" method="post">
+    {% csrf_token %}
+    {% for li in other %}
+         <p>{{ li }}</p>
+    {% endfor %}   
+    <input name="nam" type="text" value="{{ form }}">
+    <input type="submit" value="Submit" />
+</form>
