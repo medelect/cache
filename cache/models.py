@@ -1,5 +1,4 @@
 from __future__ import unicode_literals
-
 #from django.db import models
 
 
@@ -27,28 +26,26 @@ class Bill(Base):
     id = Column(Integer, primary_key=True)
     article = Column(Integer)
     waranty =Column(Integer)
-    dateIn = Column(DateTime, default=func.now())
-    dateOut = Column(DateTime, default=func.now())
-    dateBuy = Column(DateTime, default=func.now())
-    favor = Column(Integer)
+    dateIn = Column(Date)
+    dateOut = Column(Date)
+    dateBuy = Column(Date)
+    favour = Column(Integer)
     coast = Column(Integer)
     usable = Column(Integer)
     converce =Column(Boolean)
     comment = Column(String(50))
 
-    def __init__(self, article, waranty, dateIn, dateOut,
-                 dateBuy, favour, coast, usable, converce, comment
-                ):
-        self.article = article
-        self.waranty = waranty
-        self.dateIn = dateIn
-        self.dateOut = dateOut
-        self.dateBuy = dateBuy
-        self.favour = favour
-        self.coast = coast
-        self.usable = usable
-        self.converce = converce
-        self.comment = comment
+    def __init__(self, **kargs ):
+        self.article = kargs['article']
+        self.waranty = kargs['waranty']
+        self.dateIn = kargs['dateIn']
+        self.dateOut = kargs['dateOut']
+        self.dateBuy = kargs['dateBuy']
+        self.favour = kargs['favour']
+        self.coast = kargs['coast']
+        self.usable = kargs['usable']
+        self.converce = kargs['converce']
+        self.comment = kargs['comment']
 
     def __repr__(self):
          return u'Bill(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)' % (
@@ -63,9 +60,9 @@ class Income(Base):
     date = Column(Date)
     quantas =  Column(Integer)
 
-    def __init__(self, date, quantas):
-        self.date = date
-        self.quantas = quantas
+    def __init__(self, **kargs):
+        self.date = kargs['date']
+        self.quantas = kargs['quantas']
 
     def __repr__(self):
         return u'Income(%s, %s, %s)' % (self.id, self.date, self.quantas)
@@ -78,10 +75,10 @@ class Inflow(Base):
     source = Column(String(100))
     amount = Column(Integer)
 
-    def __init__(self, date, source, amount):
-       self.date = date
-       self.source = source
-       self.amount = amount
+    def __init__(self, **kargs):
+       self.date = kargs['date']
+       self.source = kargs['source']
+       self.amount = kargs['amount']
 
     def __repr__(self):
         return u'Inflow(%s, %s, %s)' % (self.date, self.source, self.amount)
@@ -90,23 +87,23 @@ class Inflow(Base):
 class Groups(Base):
     __tablename__ = 'u_groups'
     id = Column(Integer, primary_key=True)
-    level = Column(Integer) # 0-base, 1-sub, 2-subsub
+    parent = Column(Integer) 
     name = Column(String(50))
     usable = Column(Integer)
     division = Column(Integer)
     color =  Column(Integer)
     plane =  Column(Integer)
-
-    def __init__(self, level, name, usable, division, color, plane):
-        self.level = level
-        self.name = name
-        self.usable = usable
-        self.division = devision
-        self.color = color
-        self.plane = plane
+    
+    def __init__(self, **kargs):
+        self.parent = kargs['parent']
+        self.name = kargs['name']
+        self.usable = kargs['usable']
+        self.division = kargs['division']
+        self.color = kargs['color']
+        self.plane = kargs['plane']
 
     def __str__(self):
-        return u'Group(%s, %s, %s, %s, %s, %s)' % (level,
+        return u'Group(%s, %s, %s, %s, %s, %s)' % (parent,
                 name, usable, division, color, plane)
 
 

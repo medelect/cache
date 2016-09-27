@@ -5,8 +5,8 @@ import datetime
 
 from django.shortcuts import render_to_response
 import sqlalchemy, sqlalchemy.orm
-from models import Base, Language, Income
-from .forms import NameForm, IncomeForm
+from models import Base, Language, Income, Bill, Inflow, Groups
+from .forms import NameForm, IncomeForm, BillForm, InflowForm, GroupsForm
 from django.core.mail import send_mail
 
 
@@ -25,27 +25,66 @@ def inc(request):
     return HttpResponse("PPZDC") 
 
 
-def name(request):
+def BillView(request):
     if request.method == 'POST':
-        form_o = NameForm(request.POST)
-        if form_o.is_valid():
-           # return render(request, 'cache/name.html', {'form': form, 'other': form_o})
-            return HttpResponseRedirect('/thanks/')
+        form = BillForm(request.POST)
+        if form.validate():
+            dataFromForm = {}
+            for field in form:
+                dataFromForm[field.name] = field._value()
+            newRecord = Bill(**dataFromForm)
+            session.add(newRecord)
+            session.commit()
+#            return HttpResponseRedirect('cache/???.html') # show saved record
     else:
-        form = NameForm()
-
-    return render(request, 'cache/name.html', {'form': form, 'other': [1, 2, 3]})
+        form = BillForm()
+    return render(request, 'cache/inpt.html', {'form': form})
 
 def IncomeView(request):
     if request.method == 'POST':
         form = IncomeForm(request.POST)
         if form.validate():
-            newRecord = Income('2001-01-03', form.quantas)
+            dataFromForm = {}
+            for field in form:
+                dataFromForm[field.name] = field._value()
+            newRecord = Income(**dataFromForm)
             session.add(newRecord)
             session.commit()
-            return HttpResponseRedirect('cache/inc.html')
+#            return HttpResponseRedirect('cache/inc.html') # show saved record
     else:
         form = IncomeForm()
+    return render(request, 'cache/inpt.html', {'form': form})
 
-    return render(request, 'cache/income.html', {'form': form})
+
+def InflowView(request):
+    if request.method == 'POST':
+        form = InflowForm(request.POST)
+        if form.validate():
+            dataFromForm = {}
+            for field in form:
+                dataFromForm[field.name] = field._value()
+            newRecord = Inflow(**dataFromForm)
+            session.add(newRecord)
+            session.commit()
+#            return HttpResponseRedirect('cache/inc.html') # show saved record
+    else:
+        form = InflowForm()
+    return render(request, 'cache/inpt.html', {'form': form})
+
+
+def GroupsView(request):
+    if request.method == 'POST':
+        form = GroupsForm(request.POST)
+        if form.validate():
+            dataFromForm = {}
+            for field in form:
+                dataFromForm[field.name] = field._value()
+            newRecord = Groups(**dataFromForm)
+            session.add(newRecord)
+            session.commit()
+#            return HttpResponseRedirect('cache/inc.html') # show saved record
+    else:
+        form = GroupsForm()
+    return render(request, 'cache/inpt.html', {'form': form})
+
 

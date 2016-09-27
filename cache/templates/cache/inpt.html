@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+<h1>My First Bootstrap Page</h1>
+<p>This is some text.</p> 
+</div>
+</body>
+<div class="container-fluid">
+  <h1>Hello World!</h1>
+  <p>Resize the browser window to see the effect.</p>
+  <div class="row">
+    <div class="col-sm-1" style="background-color:lavender;">.col-sm-1</div>
+    <div class="col-sm-4" style="background-color:lavenderblush;">.col-sm-4</div>
+    <div class="col-sm-4" style="background-color:lavender;">.col-sm-4</div>
+  </div>
+</div>
+
+<form action="" method="post">
+    {% csrf_token %}
+ <div class="container-fluid">
+  		   <br>
+	{% for li in form %}
+    <div class="row">
+    	<div class="col-sm-1" style="background-color:lavender;">{{ li.name  }}</div>
+	    <div class="col-sm-1" style="background-color:lavenderblush;">{{ li  }}</div>
+	</div>
+	{% endfor %} 
+</div>
+
+ 
+	
+	<input type="submit" value="Submit" />
+  </form>
+</html>
